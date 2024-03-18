@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 class ExplainableResult(BaseModel):
     result: Optional[Any] = None
     computable_comments: List[str] = Field(default_factory=list)
+    function_name: str
 
 
 def modify_statement_for_tracing(line):
@@ -46,7 +47,10 @@ def trace_function(func, *args, **kwargs):
         raise NotImplementedError(
             "The function definition signature is unexpected -- aborting!"
         )
-    lines.insert(idx_start, "    __tracer_result__ = ExplainableResult()")
+    lines.insert(
+        idx_start,
+        f'    __tracer_result__ = ExplainableResult(function_name="{func.__name__}")',
+    )
 
     modified_lines = []
     for line in lines:
