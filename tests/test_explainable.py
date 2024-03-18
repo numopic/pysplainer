@@ -2,7 +2,7 @@ from pysplainer import explainable
 
 
 @explainable
-def example_function(x, y, z):
+def example_function(x: float, y: float, z: float) -> float:
     ##$ This is a printed-out comment
     result = x * y + z**2
     ##$ gamma = x*y + z^2 = {result*1000:.2f} mm
