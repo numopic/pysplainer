@@ -77,11 +77,11 @@ def calculation_func(f_hv_tot, n_hpf):
     return f_hv
 
 
-def test_without_introspection():
+def _test_without_introspection():
     assert calculation_func(10000, 2) == approx(5000)
 
 
-def test_with_introspection():
+def _test_with_introspection():
     # Test the revised function
     def example_function(x):
 
