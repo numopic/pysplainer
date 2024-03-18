@@ -35,16 +35,13 @@ def trace_function(func, *args, **kwargs):
     dedented_source = textwrap.dedent(source)
     lines = dedented_source.split("\n")
 
+    if lines[0].startswith("@explainable"):
+        lines = lines[1:]
+
     # TODO: This does not work if def line has multiple rows or if
     # decorator line is more complex or if there is a docstring
     if lines[0].startswith("def") and lines[0].endswith(":"):
         idx_start = 1
-    elif (
-        lines[0].startswith("@explainable")
-        and lines[1].startswith("def")
-        and lines[1].endswith(":")
-    ):
-        idx_start = 2
     else:
         raise NotImplementedError(
             "The function definition signature is unexpected -- aborting!"
