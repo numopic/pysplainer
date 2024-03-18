@@ -1,15 +1,8 @@
 import inspect
 import textwrap
 import re
-from typing import List, Optional, Any
 
-from pydantic import BaseModel, Field
-
-
-class ExplainableResult(BaseModel):
-    result: Optional[Any] = None
-    computable_comments: List[str] = Field(default_factory=list)
-    function_name: str
+from .explainable_result import ExplainableResult
 
 
 def modify_statement_for_tracing(line):
