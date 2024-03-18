@@ -20,3 +20,18 @@ Explainable Python code
 - [ ] Make a summary of all the situations that this does not work
 - [ ] Make a plan for next steps
  
+## Similar libraries
+
+We can find libraries under the term _literate programming_ that serve a similar (but not exactly the same) purpose. 
+
+- https://en.wikipedia.org/wiki/Literate_programming
+
+In Python, literate programming libraries might be
+
+- Jupyter notebooks
+- PyLit
+- PyReport (discontinued)
+
+Similar concept is document generation:
+- https://en.wikipedia.org/wiki/Documentation_generator
+- https://homes.cs.washington.edu/~mernst/pubs/test-documentation-ase2011.pdf
