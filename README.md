@@ -15,6 +15,8 @@ Explainable Python code
 - [ ] Create an example with some physical function ()
 - [ ] Find a way to do this with nested functions
 - [ ] Switch to AST implementation
+  - [ ] AST implementation might not be usable since AST ignores comments, and we rely on it
+  - [ ] `tokenize` python library might be used instead
 - [ ] Add installation instructions
 - [ ] Add example into README.md
 - [ ] Implement ExplainableResult.as_dict()
