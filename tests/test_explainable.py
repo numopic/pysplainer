@@ -73,7 +73,6 @@ def test_explainable_call_with_trace():
 def test_explainable_trace_to_pdf():
     result = example_function(2, 3, 4, explain=True)
     assert result.result == 22
-    from timeit import default_timer as timer
 
     file_path = "tests/.temp_output/test_explainable_trace_to_pdf.pdf"
     if os.path.exists(file_path):
