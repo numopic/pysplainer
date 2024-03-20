@@ -4,12 +4,12 @@ from pysplainer.tracer import trace_function
 def example_function(x):
     if x < 10:
         y = 20 * x
-        ##$ y = {y / 1000:.2f} kN <eq:y>
+        ##! y = {y / 1000:.2f} kN <eq:y>
         return y
     y = x + 1
     z = y * 2
-    ##$ y = {y / 1000:.2f} kN <eq:y>
-    ##$ z = {z / 1000:.2f} kN <eq:z>
+    ##! y = {y / 1000:.2f} kN <eq:y>
+    ##! z = {z / 1000:.2f} kN <eq:z>
     return z
 
 

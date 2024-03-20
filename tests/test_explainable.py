@@ -3,9 +3,9 @@ from pysplainer import explainable
 
 @explainable
 def example_function(x: float, y: float, z: float) -> float:
-    ##$ This is a printed-out comment
+    ##! This is a printed-out comment
     result = x * y + z**2
-    ##$ gamma = x*y + z^2 = {result*1000:.2f} mm
+    ##! $gamma = x*y + z^2 = {result*1000:.1f}$ mm
     return result
 
 
@@ -19,5 +19,5 @@ def test_explainable_call_with_trace():
     assert result.result == 22
     assert result.computable_comments == [
         "This is a printed-out comment",
-        "gamma = x*y + z^2 = 22000.00 mm",
+        "$gamma = x*y + z^2 = 22000.0$ mm",
     ]

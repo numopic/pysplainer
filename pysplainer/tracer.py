@@ -8,7 +8,7 @@ from .explainable_result import ExplainableResult
 def modify_statement_for_tracing(line):
     pattern_return = r"^(\s*)return (.+)$"
     match_return = re.match(pattern_return, line)
-    pattern_comment = r"^(\s*)##\$ (.+)$"
+    pattern_comment = r"^(\s*)##! (.+)$"
     match_comment = re.match(pattern_comment, line)
     if match_return:
         whitespace, return_expression = match_return.groups()
