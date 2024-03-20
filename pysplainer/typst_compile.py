@@ -12,5 +12,9 @@ def typst_compile_text(text: str, *args, **kwargs):
         # Get the path of the temporary file
         temp_path = tmp_file.name
 
-    typst.compile(temp_path, *args, **kwargs)
-    os.remove(temp_path)
+    try:
+        result = typst.compile(temp_path, *args, **kwargs)
+    finally:
+        os.remove(temp_path)
+
+    return result

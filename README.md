@@ -9,9 +9,9 @@ Explainable Python code
 
 - [x] Implement trace function
 - [x] Add the @explainable decorator to function
-- [ ] Add an example that outputs dict lines in typst format
-- [ ] Add a typst template that generates a pretty pdf
-- [ ] Implement ExplainableResult.as_pdf()
+- [x] Add an example that outputs lines in typst format
+- [x] Implement ExplainableResult.as_pdf()
+- [x] Add support for typst templates to generate a pretty pdf
 - [ ] Create an example with some physical function ()
 - [ ] Find a way to do this with nested functions
 - [ ] Switch to AST implementation
@@ -21,6 +21,7 @@ Explainable Python code
 - [ ] Implement ExplainableResult.as_markdown()
 - [ ] Make a summary of all the situations that this does not work
 - [ ] Make a plan for next steps
+- [ ] Try following steps in https://github.com/typst/typst/issues/1158 to make typst compilation completely in memory
  
 ## Similar libraries
 
