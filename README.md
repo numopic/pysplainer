@@ -16,6 +16,7 @@ Explainable Python code
 - [ ] Create an example with some physical function ()
 - [ ] Find a way to do this with nested functions
 - [ ] Caching of converted functions so that same functions are not converted multiple times
+- [ ] Template can be a string that is prepended or a function that is called on ExplainableResult object
 - [ ] Deal with `"` more elegantly in comments than having to define them as `\"`
 - [ ] Switch to AST implementation
   - [ ] AST implementation might not be usable since AST ignores comments, and we rely on it
