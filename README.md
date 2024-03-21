@@ -12,8 +12,11 @@ Explainable Python code
 - [x] Add an example that outputs lines in typst format
 - [x] Implement ExplainableResult.as_pdf()
 - [x] Add support for typst templates to generate a pretty pdf
+- [x] Make an example with a matrix
 - [ ] Create an example with some physical function ()
 - [ ] Find a way to do this with nested functions
+- [ ] Caching of converted functions so that same functions are not converted multiple times
+- [ ] Deal with `"` more elegantly in comments than having to define them as `\"`
 - [ ] Switch to AST implementation
   - [ ] AST implementation might not be usable since AST ignores comments, and we rely on it
   - [ ] `tokenize` python library might be used instead

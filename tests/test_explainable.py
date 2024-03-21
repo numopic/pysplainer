@@ -1,6 +1,8 @@
 import base64
 import os
 
+from numpy import ndarray, array, identity
+
 from pysplainer import explainable
 
 
@@ -56,6 +58,25 @@ def example_function(x: float, y: float, z: float) -> float:
     return result
 
 
+def to_typst_2d_mat_str(a: ndarray) -> str:
+    return "; ".join([", ".join([str(el) for el in row]) for row in a])
+
+
+@explainable
+def example_matrix_function(a: ndarray, b: ndarray) -> ndarray:
+    ##! Inside the explainable function we can do different things that are not necessarily linked to the output.
+    ##! $ sum_(k=0)^n k &= 1 + ... + n \ &= (n(n+1)) / 2 $
+
+    ##! #set math.equation(numbering: \"(1)\")
+    ##! $ a = mat(delim: \"[\", {to_typst_2d_mat_str(a)}) $ <eq:a>
+    ##! $ b = mat(delim: \"[\", {to_typst_2d_mat_str(b)}) $ <eq:b>
+    c = a @ b
+    ##! We can see that if we multiply $a$ @eq:a and identity matrix $b$ @eq:b that matrix product does not change
+    ##! $ c = a times b = mat(delim: \"[\", {to_typst_2d_mat_str(c)}) $
+
+    return c
+
+
 def test_explainable_direct_call():
     result = example_function(2, 3, 4)
     assert result == 22
@@ -78,5 +99,17 @@ def test_explainable_trace_to_pdf():
     if os.path.exists(file_path):
         os.remove(file_path)
     result.as_pdf(template=TEMPLATE, output=file_path)
+
+    assert os.path.exists(file_path)
+
+
+def test_explainable_trace_to_pdf():
+    a = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    b = identity(3)
+    result = example_matrix_function(a, b, explain=True)
+    file_path = "tests/.temp_output/test_explainable_matrix.pdf"
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    result.as_pdf(output=file_path)
 
     assert os.path.exists(file_path)
