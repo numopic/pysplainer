@@ -18,6 +18,14 @@ Explainable Python code
 - [ ] Create an example with a more complex physical calculation
 - [ ] Add installation instructions
 - [ ] Add example into README.md
+- [ ] Add Github actions for automated formatting, testing, code coverage on deploy
+- [ ] Add Github shields for
+  - tests: passing
+  - code coverage: 99%
+  - license: MIT
+  - Code style: black
+  - pypi version
+- [ ] Find minimum working version of dependancies
 - [ ] Publish lib to PyPi
 - [ ] Make a summary of all the situations in which this does not work
 - [ ] Make a plan for next steps
