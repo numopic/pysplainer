@@ -8,16 +8,16 @@ from pysplainer.typst_compile import typst_compile_text
 
 class ExplainableResult(BaseModel):
     result: Optional[Any] = None
-    computable_comments: List[str] = Field(default_factory=list)
+    comments: List[str] = Field(default_factory=list)
     function_name: str
 
     def get_comments_recursively(self):
-        return self.computable_comments
+        return self.comments
 
     def as_pdf(
         self, template: Optional[str] = "", output: Optional[str] = None
     ) -> Optional[BytesIO]:
-        text = template + "\n\n".join(self.computable_comments)
+        text = template + "\n\n".join(self.comments)
         return typst_compile_text(text, output=output)
 
     def as_markdown(self):

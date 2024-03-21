@@ -86,7 +86,7 @@ def test_explainable_direct_call():
 def test_explainable_call_with_trace():
     result = example_function(2, 3, 4, explainable=True)
     assert result.result == 22
-    assert result.computable_comments == [
+    assert result.comments == [
         "This is a printed-out comment",
         "$gamma = x*y + z^2 = 22000.0$ mm",
     ]

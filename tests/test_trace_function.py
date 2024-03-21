@@ -15,10 +15,10 @@ def example_function(x):
 
 def test_trace_function():
     result = trace_function(example_function, 9)
-    assert result.computable_comments == ["y = 0.18 kN <eq:y>"]
+    assert result.comments == ["y = 0.18 kN <eq:y>"]
     assert result.result == 180
 
     result = trace_function(example_function, 22)
-    assert result.computable_comments == ["y = 0.02 kN <eq:y>", "z = 0.05 kN <eq:z>"]
+    assert result.comments == ["y = 0.02 kN <eq:y>", "z = 0.05 kN <eq:z>"]
     assert result.result == 46
     assert result.function_name == "example_function"
