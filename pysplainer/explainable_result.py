@@ -11,17 +11,11 @@ class ExplainableResult(BaseModel):
     comments: List[str] = Field(default_factory=list)
     function_name: str
 
-    def get_comments_recursively(self):
-        return self.comments
+    def as_text(self):
+        return "\n\n".join(self.comments)
 
     def as_pdf(
         self, template: Optional[str] = "", output: Optional[str] = None
     ) -> Optional[BytesIO]:
-        text = template + "\n\n".join(self.comments)
+        text = template + self.as_text()
         return typst_compile_text(text, output=output)
-
-    def as_markdown(self):
-        raise NotImplementedError("ExplainableResult.as_markdown() not implemented")
-
-    def as_dict(self):
-        raise NotImplementedError("ExplainableResult.as_dict() not implemented")
