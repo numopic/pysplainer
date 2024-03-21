@@ -18,6 +18,7 @@ Explainable Python code
 - [ ] Caching of converted functions so that same functions are not converted multiple times
 - [ ] Template can be a string that is prepended or a function that is called on ExplainableResult object
 - [ ] Deal with `"` more elegantly in comments than having to define them as `\"`
+- [ ] Have multiple subsequent lines be treated as one line (so that we can observe the character line limit)
 - [ ] Switch to a more robust implementation
   - [ ] ~~AST implementation might not be usable since AST ignores comments, and we rely on it~~
   - [ ] `tokenize` python library might be used instead
