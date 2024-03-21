@@ -84,7 +84,7 @@ def test_explainable_direct_call():
 
 
 def test_explainable_call_with_trace():
-    result = example_function(2, 3, 4, explain=True)
+    result = example_function(2, 3, 4, explainable=True)
     assert result.result == 22
     assert result.computable_comments == [
         "This is a printed-out comment",
@@ -93,7 +93,7 @@ def test_explainable_call_with_trace():
 
 
 def test_explainable_trace_to_pdf():
-    result = example_function(2, 3, 4, explain=True)
+    result = example_function(2, 3, 4, explainable=True)
     assert result.result == 22
 
     file_path = "tests/.temp_output/test_explainable_trace_to_pdf.pdf"
@@ -107,7 +107,7 @@ def test_explainable_trace_to_pdf():
 def test_explainable_with_matrices():
     a = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     b = identity(3)
-    result = example_matrix_function(a, b, explain=True)
+    result = example_matrix_function(a, b, explainable=True)
     file_path = "tests/.temp_output/test_explainable_matrix.pdf"
     if os.path.exists(file_path):
         os.remove(file_path)
