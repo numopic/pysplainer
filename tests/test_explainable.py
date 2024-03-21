@@ -26,12 +26,13 @@ TEMPLATE = f"""
 = Introduction
 #lorem(90)
 
+#let space_invader_img = image.decode(
+    base64.decode("{img_str}"),
+    format: "png",
+    width: 5cm,
+)
 #figure(
-    image.decode(
-        base64.decode("{img_str}"),
-        format: "png",
-        width: 5cm,
-    ),
+    space_invader_img,
     caption: [
         Space invaders are objectively the best game and reading images as base64 technically works fine,
         but it's really slow since the image is first converted to base64, then injected into SVG, 
@@ -65,7 +66,7 @@ def to_typst_2d_mat_str(a: ndarray) -> str:
 @explainable
 def example_matrix_function(a: ndarray, b: ndarray) -> ndarray:
     ##! Inside the explainable function we can do different things that are not necessarily linked to the output.
-    ##! $ sum_(k=0)^n k &= 1 + ... + n \ &= (n(n+1)) / 2 $
+    ##! $ sum_(k=0)^n k &= 1 + ... + n \\ &= (n(n+1)) / 2 $
 
     ##! #set math.equation(numbering: \"(1)\")
     ##! $ a = mat(delim: \"[\", {to_typst_2d_mat_str(a)}) $ <eq:a>
@@ -103,7 +104,7 @@ def test_explainable_trace_to_pdf():
     assert os.path.exists(file_path)
 
 
-def test_explainable_trace_to_pdf():
+def test_explainable_with_matrices():
     a = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
     b = identity(3)
     result = example_matrix_function(a, b, explain=True)
