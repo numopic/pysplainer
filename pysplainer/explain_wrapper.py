@@ -53,13 +53,12 @@ def convert_func_to_explainable(func, *args, **kwargs) -> ExplainableResult:
 
     tree = ast.parse("\n".join(code_lines))
 
-    new_stmt = ast.parse(
-        f"__explainable_result__ = ExplainableResult(function_name='{func.__name__}')"
-    ).body[0]
-
     # Modify the AST: Insert the new statement at the beginning of the function body
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef):
+            new_stmt = ast.parse(
+                f"__explainable_result__ = ExplainableResult(function_name='{func.__name__}')"
+            ).body[0]
             node.body.insert(0, new_stmt)
             break
 
