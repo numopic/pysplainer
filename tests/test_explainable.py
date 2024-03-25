@@ -34,7 +34,7 @@ TEMPLATE = f"""
 #figure(
     space_invader_img,
     caption: [
-        Space invaders are objectively the best game and reading images as base64 technically works fine,
+        Reading images as base64 technically works fine,
         but it's really slow since the image is first converted to base64, then injected into SVG, 
         then SVG is re-rendered as an image and then it's all scaled and positioned. 
         So many unnecessary steps just for programming conevenience
@@ -109,6 +109,42 @@ def test_explainable_with_matrices():
     b = identity(3)
     result = example_matrix_function(a, b, explainable=True)
     file_path = "tests/.temp_output/test_explainable_matrix.pdf"
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    result.as_pdf(output=file_path)
+
+    assert os.path.exists(file_path)
+
+
+@explainable
+def get_area_square(a: float, b: float) -> float:
+    ##! We are calculating the area of a rectangular cross-section:
+    area = a * b
+    ##! $ A = a times b = {a*1000:.1f} text(\"mm\") times {b*1000:.1f} text(\"mm\") = {area*1e6:.1f} text(\" mm\")^2 $
+    return area
+
+
+@explainable
+def get_stress(a: float, b: float, load: float) -> float:
+    ##! The following is just calculating with random values and checking if function call without returning values will be picked up:
+    get_area_square(0.001, 0.002)
+
+    ##! Now we get to the real values used in the calculation:
+    area = get_area_square(a, b)
+    # area = get_area_square(
+    #     a, b, __explainable_extend_comments__=__explainable_result__.comments
+    # )
+
+    ##! We are calculating the stress from load and area:
+    sigma = load / area
+    ##! $ sigma = F/A = ({load:.1f} text(N)) / ({area*1e6:.1f} text(\" mm\")^2) = {sigma:.1f} text(N)/text(m)^2 $
+    return sigma
+
+
+def test_explainable_with_nested_functions():
+
+    result = get_stress(0.2, 0.15, 2000, explainable=True)
+    file_path = "tests/.temp_output/test_nested_functions.pdf"
     if os.path.exists(file_path):
         os.remove(file_path)
     result.as_pdf(output=file_path)

@@ -14,7 +14,7 @@ Explainable Python code
 - [x] Add support for typst templates to generate a pretty pdf
 - [x] Make an example with a matrix
 - [x] Switch to AST implementation
-- [ ] Find a way to do this with nested functions
+- [x] Find a way to do this with nested functions
 - [ ] Create an example with a more complex physical calculation
 - [ ] Add installation instructions
 - [ ] Add example into README.md

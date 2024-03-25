@@ -1,38 +1,24 @@
 import ast
 import inspect
 import textwrap
-import re
 from functools import wraps
-from typing import List, Callable
+from typing import Callable
 
 from .explainable_result import ExplainableResult
-
-EXPLAINABLE_RESULT_VAR_NAME = "__explainable_result__"
-COMMENT_REGEX = re.compile(r"^(\s*)##! (.+)$")
-RETURN_REGEX = re.compile(r"^(\s*)return (.+)$")
-COMMENT_REPLACER = (
-    lambda g: f'{g[0]}{EXPLAINABLE_RESULT_VAR_NAME}.comments.append(f"{g[1]}")'
+from .constants import (
+    EXPLAINABLE_TRIGGER_KWARG,
+    FUNC_ATTR_ID,
+    NESTED_FUNC_COMMENTS_KWARG,
+    TMP_RESULT_VAR_NAME,
 )
-RETURN_REPLACER = (
-    lambda g: f"{g[0]}{EXPLAINABLE_RESULT_VAR_NAME}.result = {g[1]}; return {EXPLAINABLE_RESULT_VAR_NAME}"
+from .explain_regex import (
+    COMMENT_REGEX,
+    COMMENT_REPLACER,
+    RETURN_REGEX,
+    RETURN_REPLACER,
+    regex_process_lines,
 )
-
-
-def regex_process_lines(
-    lines: List[str], compiled_regex: re.Pattern, replacement_func: Callable
-) -> List[str]:
-    result = []
-    for line in lines:
-        match_comment = compiled_regex.match(line)
-        if not match_comment:
-            result.append(line)
-            continue
-
-        matched_groups = match_comment.groups()
-        modified_line = replacement_func(matched_groups)
-        result.append(modified_line)
-
-    return result
+from .explain_ast import AppendKeywordArgumentTransformer
 
 
 def convert_func_to_explainable(func, *args, **kwargs) -> ExplainableResult:
@@ -57,12 +43,17 @@ def convert_func_to_explainable(func, *args, **kwargs) -> ExplainableResult:
     for node in ast.walk(tree):
         if isinstance(node, ast.FunctionDef):
             new_stmt = ast.parse(
-                f"__explainable_result__ = ExplainableResult(function_name='{func.__name__}')"
+                f"{TMP_RESULT_VAR_NAME} = ExplainableResult(function_name='{func.__name__}')"
             ).body[0]
             node.body.insert(0, new_stmt)
             break
 
-    recompiled_code = compile(tree, filename="<ast>", mode="exec")
+    # Transform the AST for explainable nested functions
+    transformer = AppendKeywordArgumentTransformer(func.__globals__)
+    modified_tree = transformer.visit(tree)
+
+    ast.fix_missing_locations(modified_tree)
+    recompiled_code = compile(modified_tree, filename="<ast>", mode="exec")
 
     # Prepare global and local namespace
     func.__globals__["ExplainableResult"] = ExplainableResult
@@ -76,15 +67,32 @@ def convert_func_to_explainable(func, *args, **kwargs) -> ExplainableResult:
     return result
 
 
+def explainable_extend_comments(func, comments, *args, **kwargs):
+    explainable_result = convert_func_to_explainable(func, *args, **kwargs)
+    comments.extend(explainable_result.comments)
+    return explainable_result.result
+
+
 def explainable(func: Callable) -> Callable:
     """Main Pysplainer decorator"""
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if "explainable" in kwargs and kwargs["explainable"] == True:
-            del kwargs["explainable"]
+        if (
+            EXPLAINABLE_TRIGGER_KWARG in kwargs
+            and kwargs[EXPLAINABLE_TRIGGER_KWARG] == True
+        ):
+            del kwargs[EXPLAINABLE_TRIGGER_KWARG]
             return convert_func_to_explainable(func, *args, **kwargs)
+
+        elif NESTED_FUNC_COMMENTS_KWARG in kwargs:
+            comments_to_extend = kwargs[NESTED_FUNC_COMMENTS_KWARG]
+            del kwargs[NESTED_FUNC_COMMENTS_KWARG]
+            return explainable_extend_comments(
+                func, comments_to_extend, *args, **kwargs
+            )
 
         return func(*args, **kwargs)
 
+    setattr(wrapper, FUNC_ATTR_ID, True)
     return wrapper
