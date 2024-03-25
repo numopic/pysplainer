@@ -35,6 +35,7 @@ Explainable Python code
   - [ ] Deal with `"` more elegantly in comments than having to define them as `\"`
   - [ ] Try following steps in https://github.com/typst/typst/issues/1158 to make typst compilation completely in memory
   - [ ] Have multiple subsequent lines be treated as one line (so that we can observe the character line limit)
+  - [ ] It's not possible to create an explainable closure since the function will not have the local context
  
 ## Similar libraries
 
