@@ -93,7 +93,7 @@ Another similar concept, but with a different purpose, is document generation:
 - [x] Find minimum working version of dependancies
 - [x] Create an example with a more complex physical calculation
 - [x] Add installation instructions
-- [ ] Add example into README.md
+- [x] Add example into README.md
 - [ ] Add Github actions for automated formatting, testing, code coverage on deploy
 - [ ] Add Github shields for
   - tests: passing
