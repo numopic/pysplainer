@@ -4,11 +4,11 @@ Converts Python calculations into beautiful explanations and reports
 
 ----
 
-Pysplainer allows you to create beautiful reports in PDF, PNG and SVG format out of your Python calculations. It is as easy as adding a decorator to your Python functions and you immediately gain access to an alternative, _explainable_, mode of running your calculations. With the explainable mode enabled, you can use the trace of your calculations (including the nested functions if you wish) together with the powerful [Typst typesetting system](https://github.com/typst/typst) to show the algorithm and any intermediate results in its full glory.
+Pysplainer allows you to create beautiful reports in PDF, PNG and SVG format from your Python calculations. It is as easy as adding a decorator to your Python functions and you immediately gain access to an alternative, _explainable_, mode of running the calculations. With the explainable mode enabled, you can use the trace of your calculations (including the nested functions if you wish) together with the powerful [Typst typesetting system](https://github.com/typst/typst) to show the algorithm and any intermediate results in its full glory.
 
 ## Example
 
-You just need to decorate your code with `@explainable` decorator and mark the comments and data you want to output with `##!`:
+Just decorate your code with `@explainable` decorator and mark the comments and data you want to output with `##!` like so:
 
 ```python
 @explainable
@@ -41,12 +41,14 @@ You can still run the code normally and get regular Python results
 (4.735, 10.67634)
 ```
 
-or you can run it in the explainable mode to return an `ExplainableResult` object supporting PDF ouput like:
+or you can run it in the explainable mode to return an `ExplainableResult` object supporting PDF ouput
 
 ```python
 >>> result = triangle_metrics(0.0, 0.0, -0.2, 3.5, 2.7, 0.1, explainable=True)
 >>> result.as_pdf(output="triangle_metrics.pdf")
 ```
+
+The above code will render file `triangle_metrics.pdf`:
 
 <img src="tests/data/triangle_metrics.png" alt="Triangle metrics PDF output" style="width:600px" />
 
@@ -66,7 +68,7 @@ pip install pysplainer
 
 ## Similar libraries
 
-What `pysplainer` does is in some way smilar to _literate programming_ in the sense that it weaves the documentation/reports together with the code. However, `pysplainer` is driven by a single purpose -- to programatically generate beautiful reports based on static executable code and dynamic inputs. _Literate programming_ has wider purposes and goals and they are more focused on writing code that can be easily read and understood by people potentially unfamiliar with the code or even with coding.  
+What Pysplainer does is in some way smilar to _literate programming_ in the sense that it weaves the documentation/reports together with the code. However, Pysplainer is driven by a single purpose -- to programatically generate beautiful reports based on static executable code and dynamic inputs. _Literate programming_ has wider purposes and goals and they are more focused on writing code that can be easily read and understood by people potentially unfamiliar with the code or even with coding.  
 
 We can find more about _literate programming_ at
 
