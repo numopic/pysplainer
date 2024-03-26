@@ -15,6 +15,7 @@ Explainable Python code
 - [x] Make an example with a matrix
 - [x] Switch to AST implementation
 - [x] Find a way to do this with nested functions
+- [x] Find minimum working version of dependancies
 - [ ] Create an example with a more complex physical calculation
 - [ ] Add installation instructions
 - [ ] Add example into README.md
@@ -25,7 +26,9 @@ Explainable Python code
   - license: MIT
   - Code style: black
   - pypi version
-- [ ] Find minimum working version of dependancies
+- [ ] Run multiple env tests with tox
+- [ ] Instead of pydantic data model switch to dataclass
+- [ ] Move pytest and numpy to dev dependencies
 - [ ] Publish lib to PyPi
 - [ ] Make a summary of all the situations in which this does not work
 - [ ] Make a plan for next steps

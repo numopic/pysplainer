@@ -6,11 +6,11 @@ authors = ["filip-z <filip@zastavnik.be>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-typst = "^0.10.0"
-pytest = "^8.1.1"
-pydantic = "^2.6.4"
-numpy = "^1.26.4"
+python = "~3.9"
+typst = ">=0.7.0"
+pytest = ">=7.0.1"
+pydantic = ">=2.0.3"
+numpy = ">=1.17.5"
 
 
 [build-system]
