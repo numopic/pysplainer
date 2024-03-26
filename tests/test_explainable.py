@@ -156,6 +156,8 @@ def test_explainable_with_nested_functions():
 def test_explainable_triangle_metrics():
     @explainable
     def triangle_metrics(x1, y1, x2, y2, x3, y3):
+        ##! We have points in 2D plane as $bold(p) = vec(x, y)$
+        ##! $ bold(p_1) = vec({x1:.1f}, {y1:.1f}), quad bold(p_2) = vec({x2:.1f}, {y2:.1f}), quad bold(p_3) = vec({x3:.1f}, {y3:.1f}) $
         ##! Calculate the area of the triangle by Heron's formula
         area = abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2)
         ##! $ A = abs((x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)) / 2) = {area:.2f} $
