@@ -1,24 +1,14 @@
-# pysplainer
+# Pysplainer
 
-Converts Python calculations to beautiful PDF explanations and reports
+Converts Python calculations into beautiful explanations and reports
 
-## Instalation
+----
 
-You can add it to your project's environment with your favourite package manager. For example, with `poerty` just do
-
-```bash
-poetry add pysplainer
-```
-
-or with `pip` you can add it using
-
-```bash
-pip install pysplainer
-```
+Pysplainer allows you to create beautiful reports in PDF, PNG and SVG format out of your Python calculations. It is as easy as adding a decorator to your Python functions and you immediately gain access to an alternative, _explainable_, mode of running your calculations. With the explainable mode enabled, you can use the trace of your calculations (including the nested functions if you wish) together with the powerful [Typst typesetting system](https://github.com/typst/typst) to show the algorithm and any intermediate results in its full glory.
 
 ## Example
 
-You just need to decorate your code with `@explainable` decorator and the comments and data that you want to output with the `##!` special comments, like
+You just need to decorate your code with `@explainable` decorator and mark the comments and data you want to output with `##!`:
 
 ```python
 @explainable
@@ -42,24 +32,35 @@ def triangle_metrics(x1, y1, x2, y2, x3, y3):
   return area, circumference
 ```
 
-then you can run the code normally and get
+You can still run the code normally and get regular Python results
 
 ```python
 >>> triangle_metrics(0.0, 0.0, -0.2, 3.5, 2.7, 0.1)
 (4.735, 10.67634)
 ```
 
-or as an explainable
+or you can run it in the explainable mode to return an `ExplainableResult` object supporting PDF ouput like:
 
 ```python
 >>> result = triangle_metrics(0.0, 0.0, -0.2, 3.5, 2.7, 0.1, explainable=True)
 >>> result.as_pdf(output="triangle_metrics.pdf")
 ```
 
-
-and get the follwing output in PDF
-
 <img src="tests/data/triangle_metrics.png" alt="Triangle metrics PDF output" style="width:600px" />
+
+## Instalation
+
+You can add it to your project's environment with your favourite package manager. For example, with `poetry` just do
+
+```bash
+poetry add pysplainer
+```
+
+or with `pip` you can add it using
+
+```bash
+pip install pysplainer
+```
 
 ## Similar libraries
 
