@@ -2,6 +2,7 @@ import base64
 import os
 
 from numpy import ndarray, array, identity
+from pytest import approx
 
 from pysplainer import explainable
 
@@ -145,6 +146,39 @@ def test_explainable_with_nested_functions():
 
     result = get_stress(0.2, 0.15, 2000, explainable=True)
     file_path = "tests/.temp_output/test_nested_functions.pdf"
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    result.as_pdf(output=file_path)
+
+    assert os.path.exists(file_path)
+
+
+def test_explainable_triangle_metrics():
+    @explainable
+    def triangle_metrics(x1, y1, x2, y2, x3, y3):
+        ##! Calculate the area of the triangle by Heron's formula
+        area = abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2)
+        ##! $ A = abs((x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2)) / 2) = {area:.2f} $
+
+        ##! Calculate the lengths of the sides
+        side1 = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+        ##! $ s_1 = sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2) = {side1:.2f} $
+        side2 = ((x3 - x2) ** 2 + (y3 - y2) ** 2) ** 0.5
+        ##! $ s_2 = sqrt((x_3 - x_2)^2 + (y_3 - y_2)^2) = {side2:.2f} $
+        side3 = ((x1 - x3) ** 2 + (y1 - y3) ** 2) ** 0.5
+        ##! $ s_3 = sqrt((x_1 - x_3)^2 + (y_1 - y_3)^2) = {side3:.2f} $
+
+        ##! Circumference is the sum of side lengths
+        circumference = side1 + side2 + side3
+        ##! $ S = s_1 + s_2 + s_3 = {circumference:.2f} $
+
+        return area, circumference
+
+    inputs = (0.0, 0.0, -0.2, 3.5, 2.7, 0.1)
+    assert triangle_metrics(*inputs) == approx((4.735, 10.67634))
+
+    result = triangle_metrics(*inputs, explainable=True)
+    file_path = "tests/.temp_output/test_triangle_metrics.pdf"
     if os.path.exists(file_path):
         os.remove(file_path)
     result.as_pdf(output=file_path)
