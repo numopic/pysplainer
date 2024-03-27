@@ -1,18 +1,15 @@
 from io import BytesIO
 from typing import List, Optional, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from pysplainer.typst_compile import typst_compile_text
+
 
 @dataclass
 class ExplainableResult:
     function_name: str
-    comments: List[str] = None
+    comments: List[str] = field(default_factory=list)
     result: Optional[Any] = None
-
-    def __post_init__(self):
-        if self.comments is None:
-            self.comments = []
 
     def as_text(self):
         return "\n\n".join(self.comments)
