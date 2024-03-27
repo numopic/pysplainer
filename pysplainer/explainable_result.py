@@ -1,15 +1,18 @@
 from io import BytesIO
 from typing import List, Optional, Any
-
-from pydantic import BaseModel, Field
+from dataclasses import dataclass
 
 from pysplainer.typst_compile import typst_compile_text
 
-
-class ExplainableResult(BaseModel):
-    result: Optional[Any] = None
-    comments: List[str] = Field(default_factory=list)
+@dataclass
+class ExplainableResult:
     function_name: str
+    comments: List[str] = None
+    result: Optional[Any] = None
+
+    def __post_init__(self):
+        if self.comments is None:
+            self.comments = []
 
     def as_text(self):
         return "\n\n".join(self.comments)

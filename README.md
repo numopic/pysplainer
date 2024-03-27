@@ -98,6 +98,7 @@ Another similar concept, but with a different purpose, is document generation:
 - [x] Create an example with a more complex physical calculation
 - [x] Add installation instructions
 - [x] Add example into README.md
+- [x] Instead of pydantic data model switch to dataclass
 - [ ] Add Github actions for automated formatting, testing, code coverage on deploy
 - [ ] Add Github shields for
   - tests: passing
@@ -106,7 +107,6 @@ Another similar concept, but with a different purpose, is document generation:
   - Code style: black
   - pypi version
 - [ ] Run multiple env tests with tox
-- [ ] Instead of pydantic data model switch to dataclass
 - [ ] Move pytest and numpy to dev dependencies
 - [ ] Publish lib to PyPi
 - [ ] Make a summary of all the situations in which this does not work
