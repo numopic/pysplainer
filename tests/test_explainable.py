@@ -60,6 +60,15 @@ def example_function(x: float, y: float, z: float) -> float:
     return result
 
 
+@explainable
+def example_function_with_quotes(x: float, y: float, z: float) -> float:
+    ##! This is a printed-out "comment"
+    result = x * y + z**2
+    ##! $gamma = x*y + z^2 = {result*1000:.1f}$ "mm"
+    ##! $gamma = x*y + z^2 = {result*1000:.1f}$ \"mm\" but it should also work with backslashes
+    return result
+
+
 def to_typst_2d_mat_str(a: ndarray) -> str:
     return "; ".join([", ".join([str(el) for el in row]) for row in a])
 
@@ -84,12 +93,27 @@ def test_explainable_direct_call():
     assert result == 22
 
 
+def test_explainable_with_quotes_direct_call():
+    result = example_function_with_quotes(2, 3, 4)
+    assert result == 22
+
+
 def test_explainable_call_with_trace():
     result = example_function(2, 3, 4, explainable=True)
     assert result.result == 22
     assert result.comments == [
         "This is a printed-out comment",
         "$gamma = x*y + z^2 = 22000.0$ mm",
+    ]
+
+
+def test_explainable_with_quotes_call_with_trace():
+    result = example_function_with_quotes(2, 3, 4, explainable=True)
+    assert result.result == 22
+    assert result.comments == [
+        'This is a printed-out "comment"',
+        '$gamma = x*y + z^2 = 22000.0$ "mm"',
+        '$gamma = x*y + z^2 = 22000.0$ "mm" but it should also work with backslashes',
     ]
 
 

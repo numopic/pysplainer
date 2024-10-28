@@ -3,9 +3,20 @@ from typing import List, Callable
 
 from .constants import TMP_RESULT_VAR_NAME
 
+QUOTE_REGEX = re.compile(r'(?<!\\)"')
+
+
+def cleanup_quotes(text: str) -> str:
+    return QUOTE_REGEX.sub(r"\"", text)
+
+
 COMMENT_REGEX = re.compile(r"^(\s*)##! (.+)$")
-RETURN_REGEX = re.compile(r"^(\s*)return (.+)$")
 COMMENT_REPLACER = lambda g: f'{g[0]}{TMP_RESULT_VAR_NAME}.comments.append(f"{g[1]}")'
+COMMENT_REGEX = re.compile(r"^(\s*)##! (.+)$")
+COMMENT_REPLACER = (
+    lambda g: f'{g[0]}{TMP_RESULT_VAR_NAME}.comments.append(f"{cleanup_quotes(g[1])}")'
+)
+RETURN_REGEX = re.compile(r"^(\s*)return (.+)$")
 RETURN_REPLACER = (
     lambda g: f"{g[0]}{TMP_RESULT_VAR_NAME}.result = {g[1]}; return {TMP_RESULT_VAR_NAME}"
 )
