@@ -88,6 +88,14 @@ def example_matrix_function(a: ndarray, b: ndarray) -> ndarray:
     return c
 
 
+@explainable
+def example_with_image_in_workdir(x: float) -> float:
+    ##! This is a printed-out comment
+    result = x**2
+    ##! #figure(caption: [This is an image in workdir], image("space_invader.png", width: 5cm))
+    return result
+
+
 def test_explainable_direct_call():
     result = example_function(2, 3, 4)
     assert result == 22
@@ -208,5 +216,15 @@ def test_explainable_triangle_metrics():
     if os.path.exists(file_path):
         os.remove(file_path)
     result.as_pdf(output=file_path)
+
+    assert os.path.exists(file_path)
+
+
+def test_explainable_with_image_in_workdir():
+    result = example_with_image_in_workdir(100, explainable=True)
+    file_path = "tests/.temp_output/test_explainable_with_image_in_workdir.pdf"
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    result.as_pdf(output=file_path, workdir="tests/data")
 
     assert os.path.exists(file_path)
